@@ -1,2 +1,1 @@
 # lectures-bigphys
-kimi
