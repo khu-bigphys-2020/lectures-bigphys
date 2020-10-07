@@ -33,9 +33,9 @@ while(True):
         z_list.append(z)
 
     # 구 안에 있는 입자 수가 nExp 보다 커지면 종료
-    nTrial += 1
-    if nTrial >= nExp:
-        break
+        nTrial += 1
+        if nTrial >= nExp:
+            break
 
 print(len(x_list), len(y_list), len(z_list))
 
