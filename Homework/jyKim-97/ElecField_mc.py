@@ -12,14 +12,34 @@ def get_elecfield(pos, rhos, target_pos, vol=1, k=1):
     Es = np.zeros(target_pos.shape)
     # calculate distance
     for i in range(target_pos.shape[1]):
+        if any(np.isnan(target_pos[:, i])):
+            Es[:, i] = np.nan
+            continue
         dr = target_pos[:, np.newaxis, i] - pos
-        # r2 = dr**2
-        r3 = abs(np.sum(dr**3, axis=0))
-        # print(dr)
+        r3 = abs(np.sum(dr**2, axis=0))**(3/2)
         for dim in range(ndim):
-            Es[dim, :] = np.sum(k * rhos * dr[dim, :] / r3)
+            Es[dim, i] = np.sum(k * rhos * dr[dim, :] / r3)
     Es *= vol
     return Es
+
+
+def get_potfield(pos, rhos, target_pos, vol=1, k=1):
+    # rhos (n,)
+    # pos, (ndim x n)
+    # target_pos, (ndim x m)
+    ndim = pos.shape[0]
+    Vs = np.zeros(target_pos.shape[1])
+    # calculate distance
+    for i in range(target_pos.shape[1]):
+        if any(np.isnan(target_pos[:, i])):
+            Vs[i] = np.nan
+            continue
+        dr = target_pos[:, np.newaxis, i] - pos
+        r = np.sqrt(np.sum(dr**2, axis=0))
+        for dim in range(ndim):
+            Vs[i] = np.sum(k * rhos / r)
+    Vs *= vol
+    return Vs
 
 
 class mcSampling:
