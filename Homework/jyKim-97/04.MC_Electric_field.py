@@ -7,6 +7,10 @@ import cv2
 import argparse
 import os
 
+# usage
+# python 04.MC_Electric_field.py --xinit 0 2 --vinit 1.5 0 --charge -1 -lim -5 5 --dt 0.01
+# Last updated, 20.10.20
+
 class SolveODE_elec:
     def __init__(self, pos, rhos, vol, target_q):
         self.rhos = rhos
